@@ -43,7 +43,52 @@ const createClass = async (req, res) => {
   }
 };
 
+const updateClass = async (req, res) => {
+  try {
+    const classData = await Class.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+    if (!classData) {
+      return res.status(404).json({
+        success: false,
+        message: 'Class not found'
+      });
+    }
+    res.json({
+      success: true,
+      message: 'Class updated successfully',
+      data: classData
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: 'Error updating class',
+      error: error.message
+    });
+  }
+};
+
+const deleteClass = async (req, res) => {
+  try {
+    await Class.findByIdAndUpdate(req.params.id, { isActive: false });
+    res.json({
+      success: true,
+      message: 'Class deleted successfully'
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Error deleting class',
+      error: error.message
+    });
+  }
+};
+
 module.exports = {
   getClasses,
-  createClass
+  createClass,
+  updateClass,
+  deleteClass
 };

@@ -19,6 +19,8 @@ export const contactAPI = {
 export const classAPI = {
   getAll: (params) => api.get('/classes', { params }),
   create: (data) => api.post('/classes', data),
+  update: (id, data) => api.put(`/classes/${id}`, data),
+  delete: (id) => api.delete(`/classes/${id}`),
 };
 
 // Services API

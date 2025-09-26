@@ -205,7 +205,58 @@ const Destinations = () => {
                         </Badge>
                       </div>
                       
-                      <div className="d-flex align-items-center mb-3 text-muted">
+                      <div className="d-flex align-items-center mb-3">
+                        <MapPin size={16} className="me-2 text-muted" />
+                        <span className="text-muted small">{university.location}</span>
+                      </div>
+                      
+                      <p className="text-muted small mb-3">{university.description}</p>
+                      
+                      <div className="mb-3">
+                        <h6 className="fw-bold mb-2">Programs:</h6>
+                        {university.programs?.map((program, idx) => (
+                          <Badge key={idx} bg="light" text="dark" className="me-1 mb-1">
+                            {program}
+                          </Badge>
+                        ))}
+                      </div>
+                      
+                      {university.tuitionFee && (
+                        <div className="mb-3">
+                          <h6 className="fw-bold mb-1">Tuition Fee:</h6>
+                          <p className="small text-muted mb-0">
+                            ¥{university.tuitionFee.min?.toLocaleString()} - ¥{university.tuitionFee.max?.toLocaleString()}/year
+                          </p>
+                        </div>
+                      )}
+                      
+                      {university.requirements && (
+                        <div className="mb-3">
+                          <h6 className="fw-bold mb-1">Requirements:</h6>
+                          <p className="small text-muted mb-0">
+                            GPA: {university.requirements.gpa} | JLPT: {university.requirements.jlptLevel} | {university.requirements.englishTest}
+                          </p>
+                        </div>
+                      )}
+                    </Card.Body>
+                    <Card.Footer className="bg-transparent border-0 pt-0">
+                      <div className="d-flex gap-2">
+                        <Button variant="outline-dark" size="sm" className="flex-fill">
+                          <Users size={16} className="me-1" />
+                          Learn More
+                        </Button>
+                        {university.website && (
+                          <Button 
+                            variant="outline-primary" 
+                            size="sm" 
+                            href={university.website} 
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <ExternalLink size={16} />
+                          </Button>
+                        )}
+                      </div>  <div className="d-flex align-items-center mb-3 text-muted">
                         <MapPin size={16} className="me-2" />
                         <span>{university.location}</span>
                       </div>
@@ -261,7 +312,7 @@ const Destinations = () => {
                           </Button>
                         )}
                       </div>
-                    </Card.Body>
+                    </Card.Footer>
                   </Card>
                 </Col>
               ))

@@ -39,15 +39,28 @@ const AdminClasses = () => {
     e.preventDefault();
     try {
       if (editingClass) {
+        await classAPI.update(editingClass._id, formData);
         setAlert({ show: true, message: 'Class updated successfully!', variant: 'success' });
       } else {
         await classAPI.create(formData);
         setAlert({ show: true, message: 'Class created successfully!', variant: 'success' });
-        fetchClasses();
       }
+      fetchClasses();
       handleCloseModal();
     } catch (error) {
       setAlert({ show: true, message: 'Error saving class', variant: 'danger' });
+    }
+  };
+
+  const handleDelete = async (classId) => {
+    if (window.confirm('Are you sure you want to delete this class?')) {
+      try {
+        await classAPI.delete(classId);
+        setAlert({ show: true, message: 'Class deleted successfully!', variant: 'success' });
+        fetchClasses();
+      } catch (error) {
+        setAlert({ show: true, message: 'Error deleting class', variant: 'danger' });
+      }
     }
   };
 
@@ -135,7 +148,11 @@ const AdminClasses = () => {
                         >
                           <Edit size={14} />
                         </Button>
-                        <Button variant="outline-danger" size="sm">
+                        <Button 
+                          variant="outline-danger" 
+                          size="sm"
+                          onClick={() => handleDelete(classItem._id)}
+                        >
                           <Trash2 size={14} />
                         </Button>
                       </td>
